@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Streamline</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="landing">
+        <header class="site-header">
+          <img src="images/logo.png" alt="logo" class="logo-img" />
+          <div class="logo">STREAMLINE</div>
+          <p class="tagline">Nuove notizie ogni giorno</p>
+        </header>
+        <div class="search">
+          <div class="search-header">
+            <p class="">Ricerca</p>
+          </div>
+          <form id="searchForm" class="search-bar">
+            <input
+              type="text"
+              id="query"
+              placeholder="Cosa vuoi cercare?"
+              required
+            />
+            <button type="submit">
+              <img src="images/search_icon.png" alt="search icon" />
+            </button>
+          </form>
+          <div class="sub">
+            <div class="category">
+              <h5>Categoria</h5>
+              <input list="Category" name="Categoria" class="c-input" />
+              <datalist id="Category">
+                <option value="Arte"></option>
+                <option value="Musica"></option>
+                <option value="Fotografia"></option>
+              </datalist>
+            </div>
+            <div class="category">
+              <h5>Lingua</h5>
+              <input list="Language" name="Language" class="c-input" />
+              <datalist id="Language">
+                <option value="Italiano"></option>
+                <option value="English"></option>
+                <option value="Español"></option>
+              </datalist>
+            </div>
+          </div>
+        </div>
+
+        <section id="results" class="results">
+          <div class="card">
+            <div class="placeholder"></div>
+            <h3 class="title"></h3>
+            <p class="desc"></p>
+          </div>
+          <div class="card">
+            <div class="placeholder"></div>
+            <h3 class="title"></h3>
+            <p class="desc"></p>
+          </div>
+          <div class="card">
+            <div class="placeholder"></div>
+            <h3 class="title"></h3>
+            <p class="desc"></p>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script src="js/script.js"></script>
+  </body>
+</html>
