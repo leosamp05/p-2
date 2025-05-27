@@ -176,6 +176,85 @@
       <button class="carousel-btn carousel-btn--prev">‹</button>
       <button class="carousel-btn carousel-btn--next">›</button>
     </div>
+
+    <div class="form">
+      <h1>Registrati per avere aggiornamenti ogni giorno</h1>
+      <div class="form-content">
+        <div class="r">
+          <div class="c">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required />
+          </div>
+          <div class="c">
+            <label for="cognome">Cognome</label>
+            <input type="text" id="cognome" name="cognome" required />
+          </div>
+        </div>
+        <div class="r">
+          <div class="c">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+        </div>
+        <div class="r">
+          <div class="c">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <div class="c">
+            <label for="c-password">Conferma Password</label>
+            <input
+              type="c-password"
+              id="c-password"
+              name="c-password"
+              required
+            />
+          </div>
+        </div>
+        <div class="r">
+          <div class="c">
+            <label for="telefono">Numero di telefono</label>
+            <input type="tel" id="telefono" name="telefono" required />
+          </div>
+        </div>
+      </div>
+    </div>
+    <button id="theme-toggle" aria-label="Toggle Dark Mode">
+      <!-- Sun -->
+      <svg
+        id="icon-sun"
+        xmlns="http://www.w3.org/2000/svg"
+        class="icon"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <circle cx="12" cy="12" r="5" fill="currentColor" />
+
+        <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </g>
+      </svg>
+
+      <!-- Moon -->
+      <svg
+        id="icon-moon"
+        xmlns="http://www.w3.org/2000/svg"
+        class="icon hidden"
+        viewBox="0 0 24 24"
+      >
+        <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
+      </svg>
+    </button>
+
     <script defer src="js/script.js"></script>
     <script defer src="js/carousel.js"></script>
   </body>
