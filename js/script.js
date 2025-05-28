@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const lang = langMap[langInput.value.trim()] || "";
 
     // build params
-    const params = new URLSearchParams({ q, token: API_KEY, max: 3 });
+    const params = new URLSearchParams({ q, token: API_KEY, max: 5 });
     if (lang) params.set("lang", lang);
     if (topic) params.set("topic", topic);
 
@@ -107,46 +107,19 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("theme-toggle");
-  const sunIcon = document.getElementById("icon-sun");
-  const moonIcon = document.getElementById("icon-moon");
   const root = document.documentElement;
-  const storageKey = "theme";
+  const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-  // Applica il tema e mostra l’icona corretta
-  function applyTheme(theme) {
-    root.setAttribute("data-theme", theme);
-    if (theme === "dark") {
-      sunIcon.classList.remove("hidden");
-      moonIcon.classList.add("hidden");
-    } else {
-      moonIcon.classList.remove("hidden");
-      sunIcon.classList.add("hidden");
-    }
-  }
+  // Apply theme based on system preference
+  const applyTheme = (e) => {
+    root.setAttribute("data-theme", e.matches ? "dark" : "light");
+  };
 
-  // Calcola tema iniziale: da localStorage o da preferenza di sistema
-  const saved = localStorage.getItem(storageKey);
-  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const initial = saved || (systemDark ? "dark" : "light");
-  applyTheme(initial);
+  // Initial check
+  applyTheme(darkModeQuery);
 
-  // Al click toggle tra light e dark
-  btn.addEventListener("click", () => {
-    const current = root.getAttribute("data-theme");
-    const next = current === "dark" ? "light" : "dark";
-    localStorage.setItem(storageKey, next);
-    applyTheme(next);
-  });
-
-  // Se cambia preferenza di sistema e non c’è un valore salvato, aggiorna
-  window
-    .matchMedia("(prefers-color-scheme: dark)")
-    .addEventListener("change", (e) => {
-      if (!localStorage.getItem(storageKey)) {
-        applyTheme(e.matches ? "dark" : "light");
-      }
-    });
+  // Listen for system theme changes
+  darkModeQuery.addEventListener("change", applyTheme);
 });
 
 document.addEventListener("DOMContentLoaded", () => {
