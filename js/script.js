@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Mappatura filtro → parametri GNews
   const catMap = {
-    Arte: "entertainment",
-    Musica: "entertainment",
-    Fotografia: "entertainment",
+    Arte: "Art",
+    Musica: "Music",
+    Fotografia: "Photography",
   };
   const langMap = {
     Italiano: "it",
