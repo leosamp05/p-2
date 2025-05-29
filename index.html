@@ -9,11 +9,15 @@
   <body>
     <div class="container">
       <div class="landing">
+
+        <!-- Header -->
         <header class="site-header">
           <img src="images/logo.png" alt="logo" class="logo-img" />
           <div class="logo">STREAMLINE</div>
           <p class="tagline">Nuove notizie ogni giorno</p>
         </header>
+
+        <!-- Barra di ricerca -->
         <div class="search">
           <div class="search-header">
             <p class="">Ricerca</p>
@@ -29,6 +33,8 @@
               <img src="images/search_icon.png" alt="search icon" />
             </button>
           </form>
+
+          <!-- Selettore lingua e categoria -->
           <div class="sub">
             <div class="category">
               <h5>Categoria</h5>
@@ -50,8 +56,35 @@
             </div>
           </div>
         </div>
-
+        
+        <!-- Risultati della ricerca -->
         <section id="results" class="results">
+          
+          <!-- Prima Card -->
+          <div class="card">
+            <div class="placeholder"></div>
+            <h3 class="title"></h3>
+            <p class="desc"></p>
+            <div class="more">
+              <p>Leggi di più</p>
+              <svg
+                id="icon-arrow"
+                class="icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <polyline points="14,6 20,12 14,18" />
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Seconda -->
           <div class="card">
             <div class="placeholder"></div>
             <h3 class="title"></h3>
@@ -75,6 +108,7 @@
             </div>
           </div>
 
+          <!-- Terza -->
           <div class="card">
             <div class="placeholder"></div>
             <h3 class="title"></h3>
@@ -98,6 +132,7 @@
             </div>
           </div>
 
+          <!-- Quarta -->
           <div class="card">
             <div class="placeholder"></div>
             <h3 class="title"></h3>
@@ -121,29 +156,7 @@
             </div>
           </div>
 
-          <div class="card">
-            <div class="placeholder"></div>
-            <h3 class="title"></h3>
-            <p class="desc"></p>
-            <div class="more">
-              <p>Leggi di più</p>
-              <svg
-                id="icon-arrow"
-                class="icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <line x1="4" y1="12" x2="20" y2="12" />
-                <polyline points="14,6 20,12 14,18" />
-              </svg>
-            </div>
-          </div>
-
+          <!-- Quinta -->
           <div class="card">
             <div class="placeholder"></div>
             <h3 class="title"></h3>
@@ -169,17 +182,30 @@
         </section>
       </div>
     </div>
+    
+    <!-- Carosello -->
     <div class="carousel-container">
       <div class="carousel-track">
-        <div class="c-card">
-          <img src="images/carousel/newton.png" alt="Helmut Newton" />
-          <h3>Helmut Newton</h3>
-          <p>
-            L’erotismo più seducente. L’attrattiva irresistibile di sguardi,
-            tacchi a spillo, sigarette a fior di bocca, nudi statuari e gambe
-            infinite.
-          </p>
-        </div>
+        
+        <!-- Prima -->
+        <a
+          href="https://www.universofoto.it/helmut-newton-grandi-fotografi-contemporanei/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div class="c-card">
+            <img src="images/carousel/newton.png" alt="Helmut Newton" />
+            <h3>Helmut Newton</h3>
+            <p>
+              L'erotismo più seducente. L'attrattiva irresistibile di sguardi,
+              tacchi a spillo, sigarette a fior di bocca, nudi statuari e gambe
+              infinite.
+            </p>
+          </div>
+        </a>
+
+        <!-- Seconda -->
+        <a href="https://www.liarumma.it/artisti/marina-abramovic" target="_blank" rel="noopener noreferrer">
         <div class="c-card">
           <img src="images/carousel/marina.png" alt="Marina Abramović" />
           <h3>Marina Abramović</h3>
@@ -188,15 +214,23 @@
             grande fermento culturale e artistico in Europa e negli Stati Uniti.
           </p>
         </div>
+        </a>
+
+        <!-- Terza -->
+        <a href="https://www.elledecor.com/it/arte/a38678408/nobuyoshi-araki-vita-e-opere/" target="_blank" rel="noopener noreferrer">
         <div class="c-card">
           <img src="images/carousel/araki.png" alt="Araki" />
           <h3>Araki</h3>
           <p>
-            Essere una femminista e un’ammiratrice del lavoro di No buyoshi
+            Essere una femminista e un'ammiratrice del lavoro di No buyoshi
             Araki sono due punti di vista che non si adattano facilmente
             insieme.
           </p>
         </div>
+        </a>
+
+        <!-- Quarta -->
+        <a href="https://www.operacity.jp/ag/exh273/e/introduction.php" target="_blank" rel="noopener noreferrer">
         <div class="c-card">
           <img src="images/carousel/aquirax.png" alt="Aquirax uno" />
           <h3>Aquirax uno</h3>
@@ -206,6 +240,10 @@
             principali illustratori e grafici giapponesi.
           </p>
         </div>
+        </a>
+
+        <!-- Quinta -->
+        <a href="https://nanzuka.com/ja/artists/hajime-sorayama" target="_blank" rel="noopener noreferrer">
         <div class="c-card">
           <img src="images/carousel/sorayama.png" alt="Sorayama Hajime" />
           <h3>Sorayama Hajime</h3>
@@ -216,15 +254,21 @@
           </p>
         </div>
       </div>
+      </a>
     </div>
+
+    <!-- Bottoni carosello -->
     <div class="carousel-nav">
       <button class="carousel-btn carousel-btn--prev">‹</button>
       <button class="carousel-btn carousel-btn--next">›</button>
     </div>
 
+    <!-- Form di registrazione -->
     <div class="form">
       <h1>Registrati per avere aggiornamenti ogni giorno</h1>
       <div class="form-content">
+
+        <!-- Nome e Cognome -->
         <div class="r">
           <div class="c">
             <label for="nome">Nome</label>
@@ -235,12 +279,16 @@
             <input type="text" id="cognome" name="cognome" required />
           </div>
         </div>
+
+        <!-- Email -->
         <div class="r">
           <div class="c">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required />
           </div>
         </div>
+
+        <!-- Password e conferma -->
         <div class="r">
           <div class="c">
             <label for="password">Password</label>
@@ -251,12 +299,16 @@
             <input type="password" id="c-password" name="c-password" required />
           </div>
         </div>
+
+        <!-- Numero di telefono -->
         <div class="r">
           <div class="c">
             <label for="telefono">Numero di telefono</label>
             <input type="tel" id="telefono" name="telefono" required />
           </div>
         </div>
+
+        <!-- Bottone invio -->
         <div class="submit-container">
           <button type="submit" class="submit-btn">Invio</button>
         </div>

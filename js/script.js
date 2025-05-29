@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_KEY = "ef1d584d371d6e149e54d970ae78ed71";
+  const API_KEY = "ef1d584d371d6e149e54d970ae78ed71"; // API key per GNews
   const form = document.getElementById("searchForm");
   const input = document.getElementById("query");
   const catInput = document.querySelector('input[name="Categoria"]');
@@ -31,12 +31,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const topic = catMap[catInput.value.trim()] || "";
     const lang = langMap[langInput.value.trim()] || "";
 
-    // build params
+    // costruzione parametri URL
+    // uso URLSearchParams per gestire i parametri
     const params = new URLSearchParams({ q, token: API_KEY, max: 5 });
     if (lang) params.set("lang", lang);
     if (topic) params.set("topic", topic);
 
-    // mostra area risultati
+    // mostra area contenente i risultati
     resultsEl.classList.add("visible");
 
     try {
@@ -51,12 +52,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const d = card.querySelector(".desc");
         const more = card.querySelector(".more p");
 
+        //Imposto immagine, titolo e descrizione
+        // Se non c'è articolo, mostro un placeholder
         if (art) {
+          // Mostra l'immagine se disponibile
           ph.innerHTML = art.image
             ? `<img class="preview" src="${art.image}" alt="">`
             : "";
           t.innerHTML = `<a href="${art.url}" target="_blank">${art.title}</a>`;
 
+          // titolo: max 8 parole
           const titleWords = art.title.split(/\s+/);
           const shortTitle =
             titleWords.length > 8
@@ -64,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
               : art.title;
           t.innerHTML = `<a href="${art.url}" target="_blank">${shortTitle}</a>`;
 
-          // descrizione: max 15 parole (resta invariato)
+          // descrizione: max 15 parole
           const desc = art.description || "";
           const words = desc.split(/\s+/);
           d.textContent =
@@ -89,23 +94,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Evento submit
+  // Evento submit per il form di ricerca
+  // previene il comportamento di default e chiama performSearch
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     performSearch();
   });
 
-  // Ogni volta che cambio categoria o lingua, rifaccio la ricerca se la query non è vuota
+  // Ogni volta che cambio categoria o lingua
+  // rifaccio la ricerca se la query non è vuota
   [catInput, langInput].forEach((el) =>
     el.addEventListener("input", () => {
       if (input.value.trim()) performSearch();
     })
   );
 
-  // All'avvio nascondiamo
+  // All'avvio nascondiamo le card dei risultati
   resultsEl.classList.remove("visible");
 });
 
+// Gestione del tema scuro/chiaro
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.documentElement;
   const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -120,60 +128,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Listen for system theme changes
   darkModeQuery.addEventListener("change", applyTheme);
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Get all required elements
-  const track = document.querySelector(".carousel-track");
-  const leftBtn = document.querySelector(".carousel-btn--left");
-  const rightBtn = document.querySelector(".carousel-btn--right");
-
-  // Check if carousel elements exist before adding logic
-  if (track && leftBtn && rightBtn) {
-    // Calcola la larghezza di una card + gap
-    const cardWidth = () => {
-      const card = track.querySelector(".c-card");
-      if (!card) return 0;
-      const style = window.getComputedStyle(track);
-      const gap = parseInt(style.gap) || 0;
-      return card.offsetWidth + gap;
-    };
-
-    // Funzione per lo scroll smooth
-    const scrollToCard = (direction) => {
-      const scrollAmount = cardWidth();
-      if (scrollAmount === 0) return;
-
-      const currentScroll = track.scrollLeft;
-      const targetScroll =
-        direction === "left"
-          ? currentScroll - scrollAmount
-          : currentScroll + scrollAmount;
-
-      track.scrollTo({
-        left: targetScroll,
-        behavior: "smooth",
-      });
-
-      requestAnimationFrame(() => updateButtons(targetScroll));
-    };
-
-    // Gestione visibilità bottoni
-    const updateButtons = (currentScroll) => {
-      const { scrollWidth, clientWidth } = track;
-      const scrollLeft = currentScroll ?? track.scrollLeft;
-      const maxScroll = scrollWidth - clientWidth;
-
-      leftBtn.style.opacity = scrollLeft > 10 ? "1" : "0.5";
-      rightBtn.style.opacity = scrollLeft < maxScroll - 10 ? "1" : "0.5";
-      track.style.cursor = "grab";
-    };
-
-    // Event listeners
-    leftBtn.addEventListener("click", () => scrollToCard("left"));
-    rightBtn.addEventListener("click", () => scrollToCard("right"));
-
-    // Initialize button states
-    updateButtons();
-  }
 });

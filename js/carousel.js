@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Indice corrente (0 = prima card in vista)
   let index = 0;
 
+  // Funzione per aggiornare la visibilità dei bottoni
   function updateButtons() {
     // quante card posso mostrare alla volta?
     const perView = window.innerWidth <= 768 ? 1 : 3;
@@ -20,12 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
       index >= cards.length - perView ? "hidden" : "visible";
   }
 
+  // Funzione per scrollare alla card corrente
   function scrollToIndex() {
     const offset = (cardWidth + gap) * index;
     track.scrollTo({ left: offset, behavior: "smooth" });
     updateButtons();
   }
 
+  // Eventi per i bottoni
   btnPrev.addEventListener("click", () => {
     if (index > 0) {
       index--;
@@ -33,6 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Eventi per il bottone "next"
+  // (controlla se ci sono abbastanza card per scorrere)
   btnNext.addEventListener("click", () => {
     const perView = window.innerWidth <= 768 ? 1 : 3;
     if (index < cards.length - perView) {
@@ -41,16 +46,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Al resize ricaccola e aggiorna i bottoni
+  // Al resize ricalcola e aggiorna i bottoni
   window.addEventListener("resize", () => {
     // ricalcola cardWidth se cambia layout
     const w = cards[0].getBoundingClientRect().width;
-    if (w !== cardWidth) {
-      // (opzionale) potresti aggiornare `cardWidth` qui
-    }
     updateButtons();
   });
 
   // init
+  // richiama la funzione e resetta.
   updateButtons();
 });
