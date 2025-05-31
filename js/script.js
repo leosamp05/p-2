@@ -1,11 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_KEY = "ef1d584d371d6e149e54d970ae78ed71"; // API key per GNews
+  const API_KEY = "ef1d584d371d6e149e54d970ae78ed71"; // tua GNews API key
   const form = document.getElementById("searchForm");
   const input = document.getElementById("query");
-  const catInput = document.querySelector('input[name="Categoria"]');
-  const langInput = document.querySelector('input[name="Language"]');
+
+  // Riferimenti per Categoria
+  const catInput = document.getElementById("catInput");
+  const catList = document.getElementById("catList");
+  // Riferimenti per Lingua
+  const langInput = document.getElementById("langInput");
+  const langList = document.getElementById("langList");
+
   const resultsEl = document.getElementById("results");
   const cards = Array.from(resultsEl.getElementsByClassName("card"));
+
+  // Array di opzioni (statiche)
+  const categories = ["Arte", "Musica", "Fotografia"];
+  const languages = ["Italiano", "English", "Español"];
 
   // Mappatura filtro → parametri GNews
   const catMap = {
@@ -19,25 +29,83 @@ document.addEventListener("DOMContentLoaded", () => {
     Español: "es",
   };
 
-  // Funzione unica che esegue la ricerca
+  // -------------------------------------------------------------------------
+  //  FUNZIONI DI AUTOCOMPLETE (mostra/filtra la lista)
+
+  function renderCatList(filterText = "") {
+    catList.innerHTML = ""; // svuoto prima di ricreare
+    const filtered = categories.filter((item) =>
+      item.toLowerCase().includes(filterText.toLowerCase())
+    );
+    filtered.forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      li.addEventListener("click", () => {
+        catInput.value = item;
+        catList.classList.add("hidden");
+        // Eseguo subito la ricerca (anche se query vuota)
+        performSearch();
+      });
+      catList.appendChild(li);
+    });
+    if (filtered.length === 0) {
+      catList.classList.add("hidden");
+    } else {
+      catList.classList.remove("hidden");
+    }
+  }
+
+  function renderLangList(filterText = "") {
+    langList.innerHTML = "";
+    const filtered = languages.filter((item) =>
+      item.toLowerCase().includes(filterText.toLowerCase())
+    );
+    filtered.forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      li.addEventListener("click", () => {
+        langInput.value = item;
+        langList.classList.add("hidden");
+        // Se c'è query o categoria, aggiorno i risultati
+        if (input.value.trim() || catInput.value.trim()) {
+          performSearch();
+        }
+      });
+      langList.appendChild(li);
+    });
+    if (filtered.length === 0) {
+      langList.classList.add("hidden");
+    } else {
+      langList.classList.remove("hidden");
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  //  FUNZIONE UNICA CHE ESEGUE LA RICERCA SU GNEWS
+
   async function performSearch() {
-    const q = input.value.trim();
-    if (!q) {
+    const rawQuery = input.value.trim();
+    const rawCat = catInput.value.trim();
+    const rawLang = langInput.value.trim();
+
+    const topic = catMap[rawCat] || "";
+    const lang = langMap[rawLang] || "";
+
+    // Se non ho né query né categoria, nascondo risultati e torno
+    if (!rawQuery && !topic) {
       resultsEl.classList.remove("visible");
       return;
     }
 
-    // leggi filtri
-    const topic = catMap[catInput.value.trim()] || "";
-    const lang = langMap[langInput.value.trim()] || "";
+    // Se la search è vuota ma ho categoria, la uso come query
+    const q = rawQuery || topic;
 
-    // costruzione parametri URL
-    // uso URLSearchParams per gestire i parametri
+    // Costruisco i parametri della chiamata GNews
     const params = new URLSearchParams({ q, token: API_KEY, max: 5 });
     if (lang) params.set("lang", lang);
     if (topic) params.set("topic", topic);
 
-    // mostra area contenente i risultati
+    // Mostro l’area dei risultati
     resultsEl.classList.add("visible");
 
     try {
@@ -52,16 +120,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const d = card.querySelector(".desc");
         const more = card.querySelector(".more p");
 
-        //Imposto immagine, titolo e descrizione
-        // Se non c'è articolo, mostro un placeholder
         if (art) {
-          // Mostra l'immagine se disponibile
+          // Immagine di anteprima
           ph.innerHTML = art.image
             ? `<img class="preview" src="${art.image}" alt="">`
             : "";
-          t.innerHTML = `<a href="${art.url}" target="_blank">${art.title}</a>`;
 
-          // titolo: max 8 parole
+          // Titolo limitato a 8 parole
           const titleWords = art.title.split(/\s+/);
           const shortTitle =
             titleWords.length > 8
@@ -69,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
               : art.title;
           t.innerHTML = `<a href="${art.url}" target="_blank">${shortTitle}</a>`;
 
-          // descrizione: max 15 parole
+          // Descrizione limitata a 15 parole
           const desc = art.description || "";
           const words = desc.split(/\s+/);
           d.textContent =
@@ -94,38 +159,77 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Evento submit per il form di ricerca
-  // previene il comportamento di default e chiama performSearch
+  // -------------------------------------------------------------------------
+  //  EVENT LISTENER (Autocomplete + Ricerca)
+
+  // 1) Quando l’utente mette a fuoco il campo Categoria
+  catInput.addEventListener("focus", () => renderCatList(""));
+
+  // 2) Filtra mentre digita in Categoria
+  catInput.addEventListener("input", () => renderCatList(catInput.value));
+
+  // 3) Nascondi la lista se perdo il focus
+  catInput.addEventListener("blur", () => {
+    setTimeout(() => catList.classList.add("hidden"), 150);
+  });
+
+  // 4) Quando l’utente mette a fuoco il campo Lingua
+  langInput.addEventListener("focus", () => renderLangList(""));
+
+  // 5) Filtra mentre digita in Lingua
+  langInput.addEventListener("input", () => renderLangList(langInput.value));
+
+  // 6) Nascondi la lista se perdo il focus
+  langInput.addEventListener("blur", () => {
+    setTimeout(() => langList.classList.add("hidden"), 150);
+  });
+
+  // 7) Al submit del form di ricerca
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     performSearch();
   });
 
-  // Ogni volta che cambio categoria o lingua
-  // rifaccio la ricerca se la query non è vuota
-  [catInput, langInput].forEach((el) =>
-    el.addEventListener("input", () => {
-      if (input.value.trim()) performSearch();
-    })
-  );
-
-  // All'avvio nascondiamo le card dei risultati
+  // All’avvio, nascondi le card dei risultati
   resultsEl.classList.remove("visible");
-});
 
-// Gestione del tema scuro/chiaro
-document.addEventListener("DOMContentLoaded", () => {
+  // -------------------------------------------------------------------------
+  //  GESTIONE TEMA SCURO/CHIARO (rimane invariata)
   const root = document.documentElement;
-  const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-  // Apply theme based on system preference
-  const applyTheme = (e) => {
+  function applyTheme(e) {
     root.setAttribute("data-theme", e.matches ? "dark" : "light");
-  };
+  }
 
-  // Initial check
-  applyTheme(darkModeQuery);
+  applyTheme(darkQuery); // controllo iniziale
+  darkQuery.addEventListener("change", applyTheme);
 
-  // Listen for system theme changes
-  darkModeQuery.addEventListener("change", applyTheme);
+  // -------------------------------------------------------------------------
+  const contactForm = document.querySelector(".form form"); // Selezioniamo il form correttamente
+  const successMessage = document.getElementById("successMessage");
+
+  if (contactForm && successMessage) {
+    contactForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      console.log("Form submitted"); // Debug
+      successMessage.classList.add("show");
+      contactForm.reset();
+    });
+
+    const closeBtn = document.querySelector(".close-btn");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        console.log("Close clicked"); // Debug
+        successMessage.classList.remove("show");
+      });
+    }
+
+    // Click outside to close
+    successMessage.addEventListener("click", (e) => {
+      if (e.target === successMessage) {
+        successMessage.classList.remove("show");
+      }
+    });
+  }
 });

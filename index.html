@@ -12,7 +12,7 @@
 
         <!-- Header -->
         <header class="site-header">
-          <img src="images/logo.png" alt="logo" class="logo-img" />
+          <a href="index.html"><img src="images/logo.png" alt="logo" class="logo-img" /></a>
           <div class="logo">STREAMLINE</div>
           <p class="tagline">Nuove notizie ogni giorno</p>
         </header>
@@ -38,23 +38,34 @@
           <div class="sub">
             <div class="category">
               <h5>Categoria</h5>
-              <input list="Category" name="Categoria" class="c-input" />
-              <datalist id="Category">
-                <option value="Arte"></option>
-                <option value="Musica"></option>
-                <option value="Fotografia"></option>
-              </datalist>
+              <div class="autocomplete-wrapper">
+                <input 
+                  type="text" 
+                  id="catInput" 
+                  class="c-input" 
+                  placeholder="Seleziona o digita..."
+                  autocomplete="off"
+                />
+                <ul id="catList" class="autocomplete-list hidden">
+                  <!-- Queste voci verranno popolate via JS -->
+                </ul>
+              </div>
             </div>
             <div class="category">
               <h5>Lingua</h5>
-              <input list="Language" name="Language" class="c-input" />
-              <datalist id="Language">
-                <option value="Italiano"></option>
-                <option value="English"></option>
-                <option value="Español"></option>
-              </datalist>
+              <div class="autocomplete-wrapper">
+                <input
+                  type="text"
+                  id="langInput"
+                  class="c-input"
+                  placeholder="Seleziona o digita..."
+                  autocomplete="off"
+                />
+                <ul id="langList" class="autocomplete-list hidden">
+                  <!-- Voci inserite via JS -->
+                </ul>
+              </div>
             </div>
-          </div>
         </div>
         
         <!-- Risultati della ricerca -->
@@ -266,8 +277,7 @@
     <!-- Form di registrazione -->
     <div class="form">
       <h1>Registrati per avere aggiornamenti ogni giorno</h1>
-      <div class="form-content">
-
+      <form class="form-content"> <!-- Modificato questo div in form -->
         <!-- Nome e Cognome -->
         <div class="r">
           <div class="c">
@@ -312,8 +322,18 @@
         <div class="submit-container">
           <button type="submit" class="submit-btn">Invio</button>
         </div>
-      </div>
+      </form>
     </div>
+
+    <!-- Messaggio di successo -->
+    <div id="successMessage" class="success-message">
+        <div class="success-content">
+            <h2>Registrazione completata!</h2>
+            <p>Il tuo account è stato creato con successo.</p>
+            <button class="close-btn">Chiudi</button>
+        </div>
+    </div>
+
     <script defer src="js/script.js"></script>
     <script defer src="js/carousel.js"></script>
   </body>
