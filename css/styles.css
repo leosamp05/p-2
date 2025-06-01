@@ -323,7 +323,7 @@ a {
 /* Carosello */
 .carousel-container {
   position: relative;
-  margin: 13rem auto 2rem;
+  margin: 20rem auto 2rem;
   width: 85%;
   max-width: 1200px;
   height: 530px;
@@ -677,8 +677,7 @@ a {
   }
 
   .c-card {
-    flex: 0 0 50%;
-    margin: 1rem 0;
+    margin: 1rem 2rem 1rem;
     padding: 1.5rem;
   }
 
@@ -796,7 +795,7 @@ a {
 
   .c-card img {
     width: 250px;
-    height: 400px;
+    height: 320px;
   }
 }
 
