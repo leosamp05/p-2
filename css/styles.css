@@ -184,7 +184,7 @@ a {
 }
 
 .autocomplete-list li {
-  color: var(--bg);
+  color: var(--list);
   font-family: "Montserrat", sans-serif;
 }
 
@@ -208,7 +208,7 @@ a {
   text-align: center;
   padding: 15px;
   font-family: "Montserrat", sans-serif;
-  color: var(--bg);
+  color: var(--list);
 }
 
 .c-input:focus {
@@ -325,7 +325,7 @@ a {
 .carousel-container {
   position: relative;
   margin: 20rem auto 2rem;
-  width: 85%;
+  width: 100%;
   max-width: 1200px;
   height: 530px;
   padding: 0 50px;
@@ -356,7 +356,7 @@ a {
   flex: 0 0 33%;
   min-width: 300px;
   max-width: 400px;
-  margin: 2rem 1rem;
+  margin: 2rem 2rem;
   border-radius: 8px;
   scroll-snap-align: center;
   text-align: left;
@@ -571,6 +571,10 @@ a {
     padding: 0 2rem;
   }
 
+  .c-card {
+    flex: 0 0 calc((100% - 4rem) / 3); /* Maintain 3 cards */
+  }
+
   .search {
     max-width: 85%;
   }
@@ -581,7 +585,7 @@ a {
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .logo {
     font-size: 2rem;
   }
@@ -791,7 +795,7 @@ a {
   .c-card {
     flex: 0 0 90%;
     min-width: 90%;
-    margin: 1rem 0;
+    margin: 1rem 1.5rem;
   }
 
   .c-card img {
@@ -854,6 +858,7 @@ a {
   --card-shadow: rgba(62, 107, 90, 0.1);
   --accent: #1aa1af;
   --subtle: #555;
+  --list: #222;
 }
 
 /* Palette dark mode */
@@ -864,6 +869,7 @@ a {
   --card-shadow: rgba(0, 0, 0, 0.5);
   --accent: #1aa1af;
   --subtle: #e0e0e0;
+  --list: #121212;
 }
 
 /* Override generali */
