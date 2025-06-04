@@ -14,13 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return { cardWidth, gap };
   }
 
+  // Calcola dinamicamente quante card entrano nella vista attuale
   function getPerView() {
-    const w = window.innerWidth;
-    if (w <= 480) return 1;
-    if (w <= 768) return 2;
-    if (w <= 1024) return 3;
-    if (w <= 1440) return 3;
-    return 4;
+    const { cardWidth, gap } = getCardDimensions();
+    // Aggiungo gap per considerare lo spazio finale
+    const available = track.clientWidth + gap;
+    const per = Math.floor(available / (cardWidth + gap));
+    return per > 0 ? per : 1;
   }
 
   function updateButtons() {
@@ -36,7 +36,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function scrollToIndex() {
     const { cardWidth, gap } = getCardDimensions();
-    const offset = (cardWidth + gap) * index;
+    const perView = getPerView();
+    const maxIndex = Math.max(0, cards.length - perView);
+
+    // Clamp index tra 0 e maxIndex
+    index = Math.max(0, Math.min(index, maxIndex));
+
+    // Calcolo offset raw
+    const rawOffset = index * (cardWidth + gap);
+    // Massimo offset per vedere l’ultima card
+    const maxOffset = track.scrollWidth - track.clientWidth;
+    // Clampo rawOffset per non superare maxOffset
+    const offset = Math.min(rawOffset, maxOffset);
 
     track.scrollTo({
       left: offset,
@@ -55,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function handleNextClick() {
     const perView = getPerView();
-    const maxIndex = cards.length - perView;
+    const maxIndex = Math.max(0, cards.length - perView);
     if (index < maxIndex) {
       index++;
       scrollToIndex();
@@ -85,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const diff = touchStartX - touchEndX;
 
     if (Math.abs(diff) > 50) {
-      // minimum swipe distance
       if (diff > 0) handleNextClick();
       else handlePrevClick();
     }
@@ -96,11 +106,12 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-      index = Math.min(index, cards.length - getPerView());
+      const perView = getPerView();
+      index = Math.min(index, Math.max(0, cards.length - perView));
       scrollToIndex();
     }, 250);
   });
 
-  // Initial setup
+  // Setup iniziale
   updateButtons();
 });

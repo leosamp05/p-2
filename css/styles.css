@@ -572,7 +572,7 @@ a {
   }
 
   .c-card {
-    flex: 0 0 calc((100% - 4rem) / 3); /* Maintain 3 cards */
+    flex: 0 0 calc((100% - 4rem) / 3);
   }
 
   .search {
@@ -682,12 +682,24 @@ a {
   }
 
   .c-card {
-    margin: 1rem 2rem 1rem;
-    padding: 1.5rem;
+    flex: 0 0 90%;
+    min-width: 90%;
+    margin: 1rem 3rem;
+    display: flex;
+    flex-direction: column;
   }
 
-  .c-card:last-child {
-    margin-right: 1rem;
+  .c-card img {
+    width: 250px;
+    height: 320px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .c-card h3,
+  .c-card p {
+    text-align: center; /* Center text */
+    width: 100%;
   }
 
   .form-content {
@@ -697,6 +709,9 @@ a {
 
   .r {
     gap: 2rem;
+  }
+  .form h1 {
+    font-size: 0.9rem;
   }
 }
 
@@ -795,12 +810,22 @@ a {
   .c-card {
     flex: 0 0 90%;
     min-width: 90%;
-    margin: 1rem 1.5rem;
+    margin: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
   }
 
   .c-card img {
     width: 250px;
     height: 320px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .c-card h3,
+  .c-card p {
+    text-align: center; /* Center text */
+    width: 100%;
   }
 }
 
@@ -843,6 +868,15 @@ a {
   .submit-btn {
     padding: 2rem 1.5rem;
     font-size: 0.8rem;
+  }
+
+  .c-card {
+    padding: 1rem; /* Reduced padding */
+  }
+
+  .c-card img {
+    width: 200px; /* Slightly smaller for very small screens */
+    height: auto; /* Maintain aspect ratio */
   }
 }
 
