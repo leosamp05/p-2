@@ -17,8 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Calcola quante card stanno effettivamente nella vista (in base a dimensioni reali)
   function getPerView() {
     const { cardWidth, gap } = getCardDimensions();
-    // “available” è la larghezza interna del container + gap (per tener conto dell’ultimo spazio)
-    const available = track.clientWidth + gap;
+    const available = track.clientWidth + gap; // È la larghezza interna del container + gap (per tener conto dell’ultimo spazio)
     const per = Math.floor(available / (cardWidth + gap));
     return per > 0 ? per : 1;
   }
@@ -42,14 +41,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // “index” non può essere < 0 né > maxIndex
     index = Math.max(0, Math.min(index, maxIndex));
 
-    // calcolo l'offset “di base” per scorrere index passi
+    // calcolo l'offset “di base” per scorrere index
     const rawOffset = index * (cardWidth + gap);
-    // scorro massimo fino a (scrollWidth - clientWidth), che allinea l’ultima a destra
+    // scorro massimo fino a (scrollWidth - clientWidth)
     const maxOffset = track.scrollWidth - track.clientWidth;
 
     let offset;
     if (index < maxIndex) {
-      // fintanto che non siamo all’ultimo “indice utile”, uso l’offset ‘raw’
+      // finche non siamo all’ultimo “indice utile”, uso l’offset ‘raw’
       offset = rawOffset;
     } else {
       // se sono già su maxIndex, calcolo un offset che porti l’ultima card al centro del container
@@ -57,8 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const lastCardPosition = lastCard.offsetLeft; // pixel da inizio track a inizio ultima card
       const containerWidth = track.clientWidth;
       const lastCardWidth = lastCard.getBoundingClientRect().width;
-      // posizionare l’ultima card al centro del container significa offset =
-      // lastCardPosition – (containerWidth/2 – lastCardWidth/2)
       const centeredOffset =
         lastCardPosition - (containerWidth - lastCardWidth) / 2;
       // non devo superare mai maxOffset
@@ -114,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Quando ridimensioni, aggiorno “index” e riscrollo
+  // Quando ridimensioni il browser, aggiorna “index” e scroll
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);

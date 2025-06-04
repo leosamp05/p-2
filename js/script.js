@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_KEY = "ef1d584d371d6e149e54d970ae78ed71"; // tua GNews API key
+  const API_KEY = "ef1d584d371d6e149e54d970ae78ed71"; // GNews API key
   const form = document.getElementById("searchForm");
   const input = document.getElementById("query");
 
@@ -29,8 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Español: "es",
   };
 
-  // -------------------------------------------------------------------------
-  //  FUNZIONI DI AUTOCOMPLETE (mostra/filtra la lista)
+  //  FUNZIONE DI AUTOCOMPLETE (mostra/filtra la lista)
 
   function renderCatList(filterText = "") {
     catList.innerHTML = ""; // svuoto prima di ricreare
@@ -80,8 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // -------------------------------------------------------------------------
-  //  FUNZIONE UNICA CHE ESEGUE LA RICERCA SU GNEWS
+  //  FUNZIONE CHE ESEGUE LA RICERCA SU GNEWS
 
   async function performSearch() {
     const rawQuery = input.value.trim();
@@ -91,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const topic = catMap[rawCat] || "";
     const lang = langMap[rawLang] || "";
 
-    // Se non ho né query né categoria, nascondo risultati e torno
+    // Se non ho né query né categoria, nascondo risultati
     if (!rawQuery && !topic) {
       resultsEl.classList.remove("visible");
       return;
@@ -159,7 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // -------------------------------------------------------------------------
   //  EVENT LISTENER (Autocomplete + Ricerca)
 
   // 1) Quando l’utente mette a fuoco il campo Categoria
@@ -168,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 2) Filtra mentre digita in Categoria
   catInput.addEventListener("input", () => renderCatList(catInput.value));
 
-  // 3) Nascondi la lista se perdo il focus
+  // 3) Nasconde la lista se perdo il focus
   catInput.addEventListener("blur", () => {
     setTimeout(() => catList.classList.add("hidden"), 150);
   });
@@ -193,8 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // All’avvio, nascondi le card dei risultati
   resultsEl.classList.remove("visible");
 
-  // -------------------------------------------------------------------------
-  //  GESTIONE TEMA SCURO/CHIARO (rimane invariata)
+  //  GESTIONE TEMA SCURO/CHIARO
   const root = document.documentElement;
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -205,14 +201,13 @@ document.addEventListener("DOMContentLoaded", () => {
   applyTheme(darkQuery); // controllo iniziale
   darkQuery.addEventListener("change", applyTheme);
 
-  // -------------------------------------------------------------------------
   const contactForm = document.querySelector(".form form"); // Selezioniamo il form correttamente
   const successMessage = document.getElementById("successMessage");
 
   if (contactForm && successMessage) {
     contactForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      console.log("Form submitted"); // Debug
+      console.log("Form submitted");
       successMessage.classList.add("show");
       contactForm.reset();
     });
@@ -220,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeBtn = document.querySelector(".close-btn");
     if (closeBtn) {
       closeBtn.addEventListener("click", () => {
-        console.log("Close clicked"); // Debug
+        console.log("Close clicked");
         successMessage.classList.remove("show");
       });
     }
