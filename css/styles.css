@@ -692,6 +692,10 @@ a {
     margin-top: 13rem;
   }
 
+  .carousel-track {
+    padding-left: calc((100% - 300px) / 2);
+  }
+
   .c-card {
     flex: 0 0 90%;
     min-width: 90%;
