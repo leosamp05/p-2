@@ -341,9 +341,15 @@ a {
   -ms-overflow-style: none;
   cursor: grab;
   gap: 2rem;
+  /* ======================= */
+  /* PADDING ORIZZONTALE PER CENTRAGGIO */
+  padding-left: calc((100% - 300px) / 2);
+  padding-right: calc((100% - 300px) / 2);
+  /* ======================= */
   scroll-padding: 0 20px;
   margin: 0 -1rem;
 }
+
 .carousel-track::-webkit-scrollbar {
   display: none;
 }
@@ -409,6 +415,9 @@ a {
 }
 .carousel-btn:hover {
   background: var(--accent);
+}
+.carousel-btn::selection {
+  background: transparent;
 }
 .carousel-btn--left,
 .carousel-btn--right {
@@ -681,6 +690,10 @@ a {
     height: 12rem;
   }
 
+  .carousel-container {
+    margin-top: 13rem;
+  }
+
   .c-card {
     flex: 0 0 90%;
     min-width: 90%;
@@ -698,7 +711,7 @@ a {
 
   .c-card h3,
   .c-card p {
-    text-align: center; /* Center text */
+    text-align: center;
     width: 100%;
   }
 

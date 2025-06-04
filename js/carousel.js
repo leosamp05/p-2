@@ -14,10 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return { cardWidth, gap };
   }
 
-  // Calcola dinamicamente quante card entrano nella vista attuale
+  // Calcola quante card stanno effettivamente nella vista (in base a dimensioni reali)
   function getPerView() {
     const { cardWidth, gap } = getCardDimensions();
-    // Aggiungo gap per considerare lo spazio finale
+    // “available” è la larghezza interna del container + gap (per tener conto dell’ultimo spazio)
     const available = track.clientWidth + gap;
     const per = Math.floor(available / (cardWidth + gap));
     return per > 0 ? per : 1;
@@ -39,15 +39,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const perView = getPerView();
     const maxIndex = Math.max(0, cards.length - perView);
 
-    // Clamp index tra 0 e maxIndex
+    // “index” non può essere < 0 né > maxIndex
     index = Math.max(0, Math.min(index, maxIndex));
 
-    // Calcolo offset raw
+    // calcolo l'offset “di base” per scorrere index passi
     const rawOffset = index * (cardWidth + gap);
-    // Massimo offset per vedere l’ultima card
+    // scorro massimo fino a (scrollWidth - clientWidth), che allinea l’ultima a destra
     const maxOffset = track.scrollWidth - track.clientWidth;
-    // Clampo rawOffset per non superare maxOffset
-    const offset = Math.min(rawOffset, maxOffset);
+
+    let offset;
+    if (index < maxIndex) {
+      // fintanto che non siamo all’ultimo “indice utile”, uso l’offset ‘raw’
+      offset = rawOffset;
+    } else {
+      // se sono già su maxIndex, calcolo un offset che porti l’ultima card al centro del container
+      const lastCard = cards[cards.length - 1];
+      const lastCardPosition = lastCard.offsetLeft; // pixel da inizio track a inizio ultima card
+      const containerWidth = track.clientWidth;
+      const lastCardWidth = lastCard.getBoundingClientRect().width;
+      // posizionare l’ultima card al centro del container significa offset =
+      // lastCardPosition – (containerWidth/2 – lastCardWidth/2)
+      const centeredOffset =
+        lastCardPosition - (containerWidth - lastCardWidth) / 2;
+      // non devo superare mai maxOffset
+      offset = Math.min(centeredOffset, maxOffset);
+    }
 
     track.scrollTo({
       left: offset,
@@ -73,35 +89,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Event Listeners
+  // Collegamento bottoni
   btnPrev.addEventListener("click", handlePrevClick);
   btnNext.addEventListener("click", handleNextClick);
 
-  // Keyboard navigation
+  // Navigazione da tastiera
   document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") handlePrevClick();
     if (e.key === "ArrowRight") handleNextClick();
   });
 
-  // Touch events
+  // Swipe touch
   let touchStartX = 0;
   let touchEndX = 0;
-
   track.addEventListener("touchstart", (e) => {
     touchStartX = e.changedTouches[0].screenX;
   });
-
   track.addEventListener("touchend", (e) => {
     touchEndX = e.changedTouches[0].screenX;
     const diff = touchStartX - touchEndX;
-
     if (Math.abs(diff) > 50) {
       if (diff > 0) handleNextClick();
       else handlePrevClick();
     }
   });
 
-  // Resize handling
+  // Quando ridimensioni, aggiorno “index” e riscrollo
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
@@ -112,6 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 250);
   });
 
-  // Setup iniziale
+  // Avvio
   updateButtons();
 });
