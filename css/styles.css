@@ -132,6 +132,7 @@ a {
 .search-bar input:focus {
   outline: none;
 }
+/* Lente */
 .search-bar button {
   cursor: pointer;
   padding: 10px 15px;
@@ -143,7 +144,7 @@ a {
   width: 24px;
   height: auto;
 }
-
+/* Categoria */
 .sub {
   display: flex;
   gap: 2rem;
@@ -157,6 +158,7 @@ a {
   flex-direction: column;
 }
 
+/* Categoria e lingua */
 .category h5 {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
@@ -179,7 +181,7 @@ a {
   background: #fff;
   border: 1px solid #ccc;
   border-top: none;
-  z-index: 10;
+  z-index: 10; /* Livello */
   width: 180px;
 }
 
@@ -189,7 +191,7 @@ a {
 }
 
 .autocomplete-list.hidden {
-  display: none;
+  display: none; /* nasconde suggerimenti */
 }
 
 .autocomplete-list li {
@@ -248,10 +250,10 @@ a {
   flex: 0 0 45%;
 }
 .card:hover {
-  transform: scale(1.02);
+  transform: scale(1.02); /* zoom */
   box-shadow: 0 4px 16px rgba(62, 107, 90, 0.2);
 }
-
+/* caricamento non riuscito */
 .placeholder {
   position: relative;
   width: 100%;
@@ -312,6 +314,7 @@ a {
 .card:hover .more {
   opacity: 1;
 }
+/* selezionato */
 .card:hover .more svg {
   background-color: #3e6b5a;
   color: #fff;
@@ -329,7 +332,6 @@ a {
   max-width: 1200px;
   height: 530px;
   padding: 0 50px;
-  border-radius: 20px;
 }
 
 .carousel-track {
@@ -360,7 +362,6 @@ a {
   min-width: 300px;
   max-width: 400px;
   margin: 2rem 2rem;
-  border-radius: 8px;
   scroll-snap-align: center;
   text-align: left;
   padding: 0.5rem 2rem;
@@ -567,6 +568,7 @@ a {
   }
 }
 
+/* Adattamento schermo */
 @media (max-width: 1200px) {
   .results.visible {
     flex-wrap: wrap;
